@@ -139,7 +139,7 @@ public class ColorPickerScreen extends Screen {
         // Title bar
         ctx.fill(px + 1, py + 1, px + PANEL_W - 1, py + 25, COL_HEADER);
         ctx.fill(px + 1, py + 25, px + PANEL_W - 1, py + 26, COL_DIVIDER);
-        ctx.drawCenteredTextWithShadow(textRenderer, title,
+        context.drawText(textRenderer, title, this.width / 2 - textRenderer.getWidth(title) / 2, py + 9, COL_TITLE, true);
                 this.width / 2, py + 9, COL_TITLE);
 
         // ── Color preview swatches ─────────────────────────────────────────
@@ -149,10 +149,10 @@ public class ColorPickerScreen extends Screen {
         int newX = px + PANEL_W / 2 + 10;
 
         // Labels above swatches
-        ctx.drawCenteredTextWithShadow(textRenderer,
+        context.drawText(textRenderer, title, this.width / 2 - textRenderer.getWidth(title) / 2, py + 9, COL_TITLE, true);
                 Text.translatable("colormod.label.current"),
                 oldX + swSz / 2, swY - 10, COL_LABEL);
-        ctx.drawCenteredTextWithShadow(textRenderer,
+        context.drawText(textRenderer, title, this.width / 2 - textRenderer.getWidth(title) / 2, py + 9, COL_TITLE, true);
                 Text.translatable("colormod.label.new"),
                 newX + swSz / 2, swY - 10, COL_LABEL);
 
@@ -178,7 +178,7 @@ public class ColorPickerScreen extends Screen {
         // Hex code for the new colour
         String hex = String.format("#%02X%02X%02X",
                 (int)(red * 255), (int)(green * 255), (int)(blue * 255));
-        ctx.drawCenteredTextWithShadow(textRenderer,
+        context.drawText(textRenderer, title, this.width / 2 - textRenderer.getWidth(title) / 2, py + 9, COL_TITLE, true);
                 Text.literal(hex),
                 this.width / 2, swY + swSz + 4, COL_LABEL);
 
