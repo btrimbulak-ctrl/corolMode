@@ -3,7 +3,6 @@
   "package": "com.colormod.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "MouseMixin",
     "ScreenMixin"
   ],
   "injectors": {
