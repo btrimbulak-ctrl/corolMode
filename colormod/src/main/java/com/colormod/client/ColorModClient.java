@@ -5,6 +5,11 @@ import com.colormod.client.gui.HudButtonRenderer;
 import com.colormod.config.ColorConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
+import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,13 +26,24 @@ public class ColorModClient implements ClientModInitializer {
         ColorConfig.load();
         HudButtonRenderer.register();
 
+        // Кнопка на головному меню
+        ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
+            if (screen instanceof TitleScreen) {
+                Screens.getButtons(screen).add(
+                    ButtonWidget.builder(
+                        Text.translatable("colormod.button.open"),
+                        btn -> client.setScreen(new ColorPickerScreen(screen))
+                    ).dimensions(6, scaledHeight - 28, 60, 20).build()
+                );
+            }
+        });
+
+        // Клік по кнопці в грі (HUD)
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.currentScreen != null) { wasLeftDown = false; return; }
-
             long window = client.getWindow().getHandle();
             boolean leftDown = GLFW.glfwGetMouseButton(window,
                     GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS;
-
             if (leftDown && !wasLeftDown) {
                 int sw = client.getWindow().getScaledWidth();
                 int sh = client.getWindow().getScaledHeight();
